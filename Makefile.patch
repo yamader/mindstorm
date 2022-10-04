@@ -1,0 +1,11 @@
+--- Makefile
++++ Makefile
+@@ -146,7 +146,7 @@
+ #
+ temp_mkfilename := .ev3rt_temp_Makefile
+ ifdef app
+-configure_copts := -DBUILD_MODULE
++configure_copts := -DBUILD_MODULE -std=c++1z -v
+ endif
+ prepare-obj-folder: clean
+        @cp $(MKFILE_DIR)/$(MKFILENAME) $(APPLDIR)/$(temp_mkfilename)
