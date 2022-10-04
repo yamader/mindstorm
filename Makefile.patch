@@ -5,7 +5,7 @@
  temp_mkfilename := .ev3rt_temp_Makefile
  ifdef app
 -configure_copts := -DBUILD_MODULE
-+configure_copts := -DBUILD_MODULE -std=c++1z -v
++configure_copts := -DBUILD_MODULE -std=c++1z
  endif
  prepare-obj-folder: clean
         @cp $(MKFILE_DIR)/$(MKFILENAME) $(APPLDIR)/$(temp_mkfilename)
