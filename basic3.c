@@ -116,7 +116,7 @@ void main_task(intptr_t _) {
 
 void run_task(intptr_t _) {
   pen_down();
-  for(int i=0; i<28; i++) {
+  for(int i=0; i<23; i++) {
     lmotor(30);
     rmotor(-40);
     sleep(5);
