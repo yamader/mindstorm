@@ -7,6 +7,9 @@
 #include "kernel_cfg.h"
 #endif
 
+// milli seconds
+#define sleep(decs) tslp_tsk(decs)
+
 #define mport_m EV3_PORT_A
 #define mport_l EV3_PORT_B
 #define mport_r EV3_PORT_C
@@ -16,9 +19,6 @@
 #define c_h 8
 #define lines (128 / c_h)
 #define cline "                              "
-
-// milli seoncds
-#define sleep(ms) tslp_tsk(ms)
 
 #define mmotor(p) ev3_motor_set_power(mport_m, p)
 #define lmotor(p) ev3_motor_set_power(mport_l, p)
@@ -70,6 +70,27 @@ void println_i(int i) {
   if(cursor < lines - 1) cursor++;
 }
 
+//
+void draw_star() {
+  for(size_t i=0; i<5; i++) {
+    pen_down();
+    both(50);
+    sleep(500);
+    pen_up();
+
+    lr(55, 10);
+    sleep(500);
+
+    lr(10, 0);
+    sleep(100);
+
+    lr(-10, -55);
+    sleep(600);
+
+    both(0);
+  }
+}
+
 void main_task(intptr_t _) {
   // init
   println("initializing motors...");
@@ -84,12 +105,13 @@ void main_task(intptr_t _) {
   println("OK");
   println("");
 
-  // wait
-  println("initializing sensors...");
-  sonic();
-  color();
-  println("OK");
-  println("");
+  // // wait
+  // println("initializing sensors...");
+  // sonic();
+  // color();
+  // reflect();
+  // println("OK");
+  // println("");
 
   println("running...");
   println("");
@@ -97,11 +119,5 @@ void main_task(intptr_t _) {
 }
 
 void run_task(intptr_t _) {
-  println("UltraSonic sensor val (cm) :");
-  println("");
-
-  while(1) {
-    printi(sonic());
-    sleep(100);
-  }
+  draw_star();
 }
