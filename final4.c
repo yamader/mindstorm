@@ -23,7 +23,8 @@
 #define mmotor(p) ev3_motor_set_power(mport_m, p)
 #define lmotor(p) ev3_motor_set_power(mport_l, p)
 #define rmotor(p) ev3_motor_set_power(mport_r, p)
-#define both(p) { lmotor(p); rmotor(p); }
+#define steer(l, r) { lmotor(l); rmotor(r); }
+#define both(p) steer(p, p)
 
 #define sonic() ev3_ultrasonic_sensor_get_distance(sport_s)
 #define color() ev3_color_sensor_get_color(sport_c)
