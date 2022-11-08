@@ -23,20 +23,18 @@
 #define mmotor(p) ev3_motor_set_power(mport_m, p)
 #define lmotor(p) ev3_motor_set_power(mport_l, p)
 #define rmotor(p) ev3_motor_set_power(mport_r, p)
-#define steer(p, r) ev3_motor_steer(mport_l, mport_r, p, r)
+#define both(p) { lmotor(p); rmotor(p); }
 
 #define sonic() ev3_ultrasonic_sensor_get_distance(sport_s)
 #define color() ev3_color_sensor_get_color(sport_c)
 #define reflect() ev3_color_sensor_get_reflect(sport_c)
 
-#define print(s) drawline(s, c_h * cursor)
-
 size_t cursor = 0;
 
 void stop() {
-  steer(10, 0);
+  both(10);
   sleep(1);
-  steer(0, 0);
+  both(0);
 }
 
 void pen_down() {
@@ -44,7 +42,6 @@ void pen_down() {
   sleep(3);
   mmotor(0);
 }
-
 void pen_up() {
   mmotor(-8);
   sleep(3);
@@ -52,22 +49,21 @@ void pen_up() {
   sleep(2);
 }
 
-void drawline(const char* s, size_t y) {
+void lcd_line(const char* s, size_t y) {
   ev3_lcd_draw_string(cline, 0, y);
   ev3_lcd_draw_string(s, 0, y);
 }
 
+#define print(s) lcd_line(s, c_h * cursor)
+void println(const char* s) {
+  print(s);
+  if(cursor < lines - 1) cursor++;
+}
 void printi(int i) {
   static char buf[31];
   sprintf(buf, "%d", i);
   print(buf);
 }
-
-void println(const char* s) {
-  print(s);
-  if(cursor < lines - 1) cursor++;
-}
-
 void println_i(int i) {
   printi(i);
   if(cursor < lines - 1) cursor++;
