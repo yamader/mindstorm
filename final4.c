@@ -7,9 +7,6 @@
 #include "kernel_cfg.h"
 #endif
 
-// deca secs
-#define sleep(decs) tslp_tsk(decs * 100)
-
 #define mport_m EV3_PORT_A
 #define mport_l EV3_PORT_B
 #define mport_r EV3_PORT_C
@@ -19,6 +16,9 @@
 #define c_h 8
 #define lines (128 / c_h)
 #define cline "                              "
+
+// milli seoncds
+#define sleep(ms) tslp_tsk(ms)
 
 #define mmotor(p) ev3_motor_set_power(mport_m, p)
 #define lmotor(p) ev3_motor_set_power(mport_l, p)
@@ -33,20 +33,20 @@ size_t cursor = 0;
 
 void stop() {
   both(10);
-  sleep(1);
+  sleep(100);
   both(0);
 }
 
 void pen_down() {
   mmotor(8);
-  sleep(3);
+  sleep(300);
   mmotor(0);
 }
 void pen_up() {
   mmotor(-8);
-  sleep(3);
+  sleep(300);
   mmotor(0);
-  sleep(2);
+  sleep(200);
 }
 
 void lcd_line(const char* s, size_t y) {
@@ -101,6 +101,6 @@ void run_task(intptr_t _) {
 
   while(1) {
     printi(sonic());
-    sleep(5);
+    sleep(100);
   }
 }
