@@ -36,6 +36,7 @@ void stop() {
   both(10);
   sleep(100);
   both(0);
+  sleep(250);
 }
 
 void pen_down() {
@@ -65,27 +66,79 @@ void printi(int i) {
   sprintf(buf, "%d", i);
   print(buf);
 }
-void println_i(int i) {
+void printiln(int i) {
   printi(i);
   if(cursor < lines - 1) cursor++;
 }
 
 //
+void draw_cir() {
+  pen_down();
+  lr(50, -50);
+  sleep(1250);
+  pen_up();
+  both(0);
+}
+
+void draw_trigon() {
+  for(size_t i=0; i<3; i++) {
+    pen_down();
+    both(50);
+    sleep(500);
+    pen_up();
+
+    lr(50, 10)
+    sleep(500);
+
+    lr(-10, -50);
+    sleep(500);
+
+    both(0);
+  }
+}
+
+void draw_tetragon() {
+  for(size_t i=0;; i++) {
+    pen_down();
+    both(50);
+    sleep(400);
+    pen_up();
+    stop();
+
+    if(i==3) break;
+
+    lr(50, 0)
+    sleep(300);
+
+    lr(0, -50);
+    sleep(330);
+
+    lr(-50, -50);
+    sleep(250);
+
+    both(0);
+  }
+}
+
 void draw_star() {
   for(size_t i=0; i<5; i++) {
     pen_down();
     both(50);
-    sleep(500);
+    sleep(650);
     pen_up();
 
     lr(55, 10);
     sleep(500);
 
     lr(10, 0);
-    sleep(100);
+    sleep(50);
 
-    lr(-10, -55);
-    sleep(600);
+    lr(-10, -10);
+    sleep(50);
+    lr(-10, -60);
+    sleep(550);
+    // lr(-10, -55);
+    // sleep(600);
 
     both(0);
   }
@@ -105,13 +158,13 @@ void main_task(intptr_t _) {
   println("OK");
   println("");
 
-  // // wait
-  // println("initializing sensors...");
-  // sonic();
-  // color();
-  // reflect();
-  // println("OK");
-  // println("");
+  // wait
+  println("initializing sensors...");
+  sonic();
+  color();
+  reflect();
+  println("OK");
+  println("");
 
   println("running...");
   println("");
@@ -119,5 +172,51 @@ void main_task(intptr_t _) {
 }
 
 void run_task(intptr_t _) {
-  draw_star();
+  both(25);
+
+  while(color() == 6)
+    sleep(5);
+  sleep(30);
+
+ color:
+  switch(color()) {
+    case COLOR_RED:
+      println("shape: CIRCLE");
+      stop();
+      lr(-50, -50);
+      sleep(45);
+      lr(0, 0);
+      draw_cir();
+      break;
+
+    case COLOR_GREEN:
+      println("shape: TRIGON");
+      stop();
+      draw_trigon();
+      break;
+
+    case COLOR_YELLOW:
+      println("shape: TETRAGON");
+      stop();
+      lr(-50, -10);
+      sleep(500);
+      lr(-50, -50);
+      sleep(200);
+      draw_tetragon();
+      break;
+
+    case COLOR_BLUE:
+      println("shape: STAR");
+      stop();
+      lr(-50, -47);
+      sleep(380);
+      draw_star();
+      break;
+
+    default:
+      sleep(10);
+      goto color;
+  }
+
+  both(0);
 }
