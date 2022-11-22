@@ -114,7 +114,7 @@ void draw_trigon_before() {
 
   pen_down();
   both(50);
-  sleep(450);
+  sleep(400);
   stop();
   pen_up();
 }
@@ -148,7 +148,7 @@ void main_task(intptr_t _) {
 
 void run_task(intptr_t _) {
   both(25);
-  while(sonic() > 27)
+  while(sonic() > 26)
     sleep(10);
   stop();
 
