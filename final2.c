@@ -198,6 +198,8 @@ void run_task(intptr_t _) {
     case COLOR_GREEN:
       println("shape: TRIGON");
       stop();
+      lr(-50, 10);
+      sleep(250);
       draw_trigon();
       break;
 
