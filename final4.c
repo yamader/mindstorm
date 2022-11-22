@@ -7,6 +7,9 @@
 #include "kernel_cfg.h"
 #endif
 
+// milli seconds
+#define sleep(decs) tslp_tsk(decs)
+
 #define mport_m EV3_PORT_A
 #define mport_l EV3_PORT_B
 #define mport_r EV3_PORT_C
@@ -16,9 +19,6 @@
 #define c_h 8
 #define lines (128 / c_h)
 #define cline "                              "
-
-// milli seoncds
-#define sleep(ms) tslp_tsk(ms)
 
 #define mmotor(p) ev3_motor_set_power(mport_m, p)
 #define lmotor(p) ev3_motor_set_power(mport_l, p)
@@ -36,6 +36,7 @@ void stop() {
   both(10);
   sleep(100);
   both(0);
+  sleep(250);
 }
 
 void pen_down() {
@@ -65,7 +66,7 @@ void printi(int i) {
   sprintf(buf, "%d", i);
   print(buf);
 }
-void println_i(int i) {
+void printiln(int i) {
   printi(i);
   if(cursor < lines - 1) cursor++;
 }
@@ -86,8 +87,9 @@ void main_task(intptr_t _) {
 
   // wait
   println("initializing sensors...");
-  sonic();
+  while(!sonic());
   color();
+  reflect();
   println("OK");
   println("");
 
@@ -97,11 +99,17 @@ void main_task(intptr_t _) {
 }
 
 void run_task(intptr_t _) {
-  println("UltraSonic sensor val (cm) :");
-  println("");
+  both(25);
+  while(reflect() >= 50);
+  stop();
 
-  while(1) {
-    printi(sonic());
-    sleep(100);
-  }
+  println("the start line detected!");
+  both(-50);
+  sleep(300);
+  both(0);
+
+  sleep(500);
+  println("difference (cm):");
+  println("");
+  printiln(sonic());
 }
