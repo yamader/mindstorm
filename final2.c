@@ -124,7 +124,7 @@ void draw_star() {
   for(size_t i=0;; i++) {
     pen_down();
     both(50);
-    sleep(400);
+    sleep(650);
     pen_up();
 
     if(i==4) {
@@ -164,13 +164,13 @@ void main_task(intptr_t _) {
   println("OK");
   println("");
 
-  // // wait
-  // println("initializing sensors...");
-  // sonic();
-  // color();
-  // reflect();
-  // println("OK");
-  // println("");
+  // wait
+  println("initializing sensors...");
+  sonic();
+  color();
+  reflect();
+  println("OK");
+  println("");
 
   println("running...");
   println("");
@@ -178,5 +178,51 @@ void main_task(intptr_t _) {
 }
 
 void run_task(intptr_t _) {
-  draw_star();
+  both(25);
+
+  while(color() == 6)
+    sleep(5);
+  sleep(30);
+
+ color:
+  switch(color()) {
+    case COLOR_RED:
+      println("shape: CIRCLE");
+      stop();
+      lr(-50, -50);
+      sleep(45);
+      lr(0, 0);
+      draw_cir();
+      break;
+
+    case COLOR_GREEN:
+      println("shape: TRIGON");
+      stop();
+      draw_trigon();
+      break;
+
+    case COLOR_YELLOW:
+      println("shape: TETRAGON");
+      stop();
+      lr(-50, -10);
+      sleep(500);
+      lr(-50, -50);
+      sleep(200);
+      draw_tetragon();
+      break;
+
+    case COLOR_BLUE:
+      println("shape: STAR");
+      stop();
+      lr(-50, -47);
+      sleep(380);
+      draw_star();
+      break;
+
+    default:
+      sleep(10);
+      goto color;
+  }
+
+  both(0);
 }
