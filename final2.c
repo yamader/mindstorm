@@ -87,7 +87,7 @@ void draw_trigon() {
     sleep(500);
     pen_up();
 
-    lr(50, 10)
+    lr(50, 0);
     sleep(500);
 
     lr(-10, -50);
@@ -187,6 +187,7 @@ void run_task(intptr_t _) {
  color:
   switch(color()) {
     case COLOR_RED:
+      println("color: RED");
       println("shape: CIRCLE");
       stop();
       lr(-50, -50);
@@ -196,24 +197,29 @@ void run_task(intptr_t _) {
       break;
 
     case COLOR_GREEN:
+      println("color: GREEN");
       println("shape: TRIGON");
       stop();
-      lr(-50, 10);
-      sleep(250);
+      lr(-50, -50);
+      sleep(400);
+      lr(-50, -35);
+      sleep(50);
       draw_trigon();
       break;
 
     case COLOR_YELLOW:
+      println("color: YELLOW");
       println("shape: TETRAGON");
       stop();
-      lr(-50, -10);
-      sleep(500);
       lr(-50, -50);
-      sleep(200);
+      sleep(400);
+      lr(-50, -35);
+      sleep(50);
       draw_tetragon();
       break;
 
     case COLOR_BLUE:
+      println("color: BLUE");
       println("shape: STAR");
       stop();
       lr(-50, -47);

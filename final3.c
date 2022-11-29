@@ -148,7 +148,7 @@ void main_task(intptr_t _) {
 
 void run_task(intptr_t _) {
   both(25);
-  while(sonic() > 26)
+  while(sonic() > 27)
     sleep(10);
   stop();
 
