@@ -103,7 +103,7 @@ void draw_trigon_before() {
   lr(50, 25);
   sleep(780);
   lr(-50, 50);
-  sleep(580);
+  sleep(570);
   both(0);
 
   sleep(100);
